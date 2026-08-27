@@ -1,18 +1,9 @@
 #!/bin/bash
-# 105_ACT_training_lerobot_official_depth_top.sh 의 top_zoom 채널 추가 버전.
-#
+
 # repo_id=my_robot_task_depth_top_zoom (Astra S 깊이카메라 탑뷰, 4카메라:
 # top/top_depth/top_zoom/wrist). top_zoom은 object_zoom.py가 HSV 색상 검출로
 # 집을 물체(현재: 빨간 상자) 주변을 동적으로 확대한 채널 - pick 정밀도 보강용.
-#
-# 기존 105_..._depth_top.sh(3카메라, repo_id=my_robot_task_depth_top)와는 완전히
-# 별개 결과물이며 서로 덮어쓰지 않는다. 결과: ./lerobot_official_act_depth_top_zoom/
-# (ACT_inference_depth_lerobot_official.py의 CHECKPOINT_DIR이 이미 이 경로를 보게
-# 되어 있음).
-#
-# [주의] 기존 depth_top(3카메라) 체크포인트로 이어학습 불가 - 입력 스키마 자체가
-# 다르므로(카메라 3개->4개) 반드시 이 데이터셋으로 처음부터 새로 학습해야 함.
-#
+
 # 사전 준비 (최초 실행 전 1회 - 아직 자동화 안 됨, 학습 전 아래 파이썬 한 줄 실행):
 #   python3 -c "
 #   import json
@@ -26,9 +17,6 @@
 #   IndexError를 피하기 위함 - data_collect_using_teleop_depth_top.py는 이미
 #   ["channels","height","width"]로 저장하도록 고쳐뒀으니, 그 스크립트로 처음부터
 #   모은 데이터셋이면 이 단계 생략 가능. 혹시 IndexError 나면 위 스니펫 실행할 것.)
-#
-# batch_size=32 유지 (카메라 3대->4대로 늘었지만, 3대일 때 VRAM 3.3GB/7.7GB만 써서
-# 여유 충분함 확인됨. GPU: RTX 5050 Laptop, 8GB VRAM).
 #
 # 사용법:
 #   bash ACT_training_lerobot_official_depth_top_zoom.sh
