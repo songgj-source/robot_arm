@@ -1,5 +1,7 @@
 # robot_arm — SO-101 ACT (depth-top-zoom) 추론 + 재학습 패키지
 
+**📄 프로젝트 포트폴리오:** [Depth-Aware Grasping](https://claude.ai/code/artifact/3a062a7e-8c32-4837-9064-cb0c848985f8)
+
 `ACT_inference_depth_lerobot_official.py`를 그대로 실행하는 데 필요한 모든 것과,
 같은 데이터셋으로 재학습(또는 새 데이터 수집)까지 할 수 있는 것들을 모아둔 폴더입니다.
 
