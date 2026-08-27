@@ -1,0 +1,4 @@
+# Orbbec Astra S (OpenNI2) — grant non-root read/write access via the "video" group.
+# 기존 60-libopenni2-0.rules에는 PrimeSense(1d27)/Kinect(045e)만 등록돼 있고
+# Orbbec(2bc5)은 빠져 있어서 일반 사용자 권한으로 열리지 않던 것을 보완.
+SUBSYSTEM=="usb", ATTR{idVendor}=="2bc5", ATTR{idProduct}=="0402", MODE:="0666", OWNER:="root", GROUP:="video"

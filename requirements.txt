@@ -1,0 +1,9 @@
+# Python 3.12 (원본 conda env: lerobot_312)
+lerobot==0.6.2   # git+https://github.com/huggingface/lerobot.git@1e3a158e1395db7e5ac7639f993902ed85748a57
+torch==2.11.0
+torchvision==0.26.0
+torchcodec==0.11.1
+opencv-python==4.13.0.92
+primesense==2.2.0.30.post5
+pyserial==3.5
+numpy==2.2.6
