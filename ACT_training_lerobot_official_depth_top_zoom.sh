@@ -7,7 +7,7 @@
 #
 # 기존 105_..._depth_top.sh(3카메라, repo_id=my_robot_task_depth_top)와는 완전히
 # 별개 결과물이며 서로 덮어쓰지 않는다. 결과: ./lerobot_official_act_depth_top_zoom/
-# (107_ACT_inference_depth_lerobot_official.py의 CHECKPOINT_DIR이 이미 이 경로를 보게
+# (ACT_inference_depth_lerobot_official.py의 CHECKPOINT_DIR이 이미 이 경로를 보게
 # 되어 있음).
 #
 # [주의] 기존 depth_top(3카메라) 체크포인트로 이어학습 불가 - 입력 스키마 자체가
@@ -23,7 +23,7 @@
 #   json.dump(info, open(p,'w'), indent=4)
 #   "
 #   (lerobot 공식 코드의 dataset_to_policy_features가 3개짜리 축 이름을 기대해서 생기는
-#   IndexError를 피하기 위함 - 103_data_collect_using_teleop_depth_top.py는 이미
+#   IndexError를 피하기 위함 - data_collect_using_teleop_depth_top.py는 이미
 #   ["channels","height","width"]로 저장하도록 고쳐뒀으니, 그 스크립트로 처음부터
 #   모은 데이터셋이면 이 단계 생략 가능. 혹시 IndexError 나면 위 스니펫 실행할 것.)
 #
@@ -31,7 +31,7 @@
 # 여유 충분함 확인됨. GPU: RTX 5050 Laptop, 8GB VRAM).
 #
 # 사용법:
-#   bash 105_ACT_training_lerobot_official_depth_top_zoom.sh
+#   bash ACT_training_lerobot_official_depth_top_zoom.sh
 set -e
 
 cd "$(dirname "$0")"

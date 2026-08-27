@@ -1,15 +1,15 @@
 # robot_arm — SO-101 ACT (depth-top-zoom) 추론 + 재학습 패키지
 
-`107_ACT_inference_depth_lerobot_official.py`를 그대로 실행하는 데 필요한 모든 것과,
+`ACT_inference_depth_lerobot_official.py`를 그대로 실행하는 데 필요한 모든 것과,
 같은 데이터셋으로 재학습(또는 새 데이터 수집)까지 할 수 있는 것들을 모아둔 폴더입니다.
 
 ## 폴더 구성
 
 ```
 robot_arm/
-├── 107_ACT_inference_depth_lerobot_official.py   # 추론 실행 스크립트 (메인)
-├── 105_ACT_training_lerobot_official_depth_top_zoom.sh  # 재학습 스크립트
-├── 103_data_collect_using_teleop_depth_top.py    # 새 데이터 수집 스크립트 (리더+팔로워 둘 다 필요)
+├── ACT_inference_depth_lerobot_official.py       # 추론 실행 스크립트 (메인)
+├── ACT_training_lerobot_official_depth_top_zoom.sh  # 재학습 스크립트
+├── data_collect_using_teleop_depth_top.py        # 새 데이터 수집 스크립트 (리더+팔로워 둘 다 필요)
 ├── debug_depth_top_camera_preview.py             # 카메라(top/top_depth/wrist) 연결 확인용
 ├── motor_control.py / orbbec_color_camera.py / object_zoom.py  # 공용 모듈
 ├── full_arm_calibration_follower.json / _leader.json  # 서보 캘리브레이션 값
@@ -52,9 +52,9 @@ pip install -r requirements.txt
 - **캘리브레이션은 로봇팔 개체마다 다릅니다.** `full_arm_calibration_follower.json`은
   원본 팔로워 암 기준 값이라 그대로 쓰면 안 맞을 수 있습니다 — 받는 쪽 로봇팔로 새로
   캘리브레이션해서 이 JSON을 교체하는 걸 권장합니다.
-- `107_ACT_inference_depth_lerobot_official.py` 상단의 `FOLLOWER_PORT = "/dev/ttyACM0"`도
+- `ACT_inference_depth_lerobot_official.py` 상단의 `FOLLOWER_PORT = "/dev/ttyACM0"`도
   받는 쪽 환경에서 실제 포트로 바꿔야 합니다 (USB 재연결마다 바뀔 수 있음).
-- 손목캠 인덱스(`cap_wrist = ThreadedCamera(4)`, 107번 스크립트 224번째 줄 부근)도
+- 손목캠 인덱스(`cap_wrist = ThreadedCamera(4)`, 추론 스크립트의 `main()` 안, 카메라 여는 부분)도
   받는 쪽 장치 번호에 맞게 바꿔야 합니다.
 - `TASK_TEXT = "pick up the red box and drop it in the black bin"` — 학습 데이터가
   "빨간 상자를 검은 통에 담기" 시나리오라서, 실제로도 같은 물체/색을 준비해야 정확히 동작합니다.
@@ -63,7 +63,7 @@ pip install -r requirements.txt
 
 ```bash
 cd robot_arm
-python3 107_ACT_inference_depth_lerobot_official.py
+python3 ACT_inference_depth_lerobot_official.py
 ```
 
 체크포인트 경로(`CHECKPOINT_DIR`)는 이미 `lerobot_official_act_depth_top_zoom/checkpoints/last/pretrained_model`을
@@ -82,7 +82,7 @@ cp -r hf_dataset_cache/my_robot_task_depth_top_zoom ~/.cache/huggingface/lerobot
 `lerobot-train` 실행파일 경로로 수정하세요):
 
 ```bash
-bash 105_ACT_training_lerobot_official_depth_top_zoom.sh
+bash ACT_training_lerobot_official_depth_top_zoom.sh
 ```
 
 기본 GPU 8GB(RTX 5050 Laptop 기준 batch_size=32)에서 검증됐습니다. VRAM이 더 적으면
@@ -93,7 +93,7 @@ bash 105_ACT_training_lerobot_official_depth_top_zoom.sh
 리더+팔로워 암이 모두 연결된 상태에서:
 
 ```bash
-python3 103_data_collect_using_teleop_depth_top.py
+python3 data_collect_using_teleop_depth_top.py
 ```
 
 리더 암으로 시연하면 top/top_depth/top_zoom/wrist 4개 카메라 관측과 관절 상태가

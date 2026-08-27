@@ -1,12 +1,12 @@
 """
 탑뷰로 새로 붙인 Orbbec Astra S(깊이카메라)의 컬러 스트림 + 깊이(depth) 스트림 + 기존
-손목캠을 나란히 미리보기. 실제 녹화(103_data_collect_using_teleop_depth_top.py) 전에
+손목캠을 나란히 미리보기. 실제 녹화(data_collect_using_teleop_depth_top.py) 전에
 카메라가 정상적으로 열리고 화면이 잘 나오는지, 그리고 깊이 정규화 범위
 (depth_min_mm/depth_max_mm)가 실제 작업대 거리에 맞는지 먼저 이걸로 확인할 것.
 
 콘솔에 1초마다 현재 프레임의 유효(0이 아닌) 깊이 min/max(mm)를 출력해준다.
 작업대/상자가 화면에 있는 상태에서 그 값을 보고, ThreadedOrbbecRGBDCamera와
-103_data_collect_using_teleop_depth_top.py의 depth_min_mm/depth_max_mm을
+data_collect_using_teleop_depth_top.py의 depth_min_mm/depth_max_mm을
 실제 거리에 맞게 조정할 것 (너무 넓게 잡으면 깊이 변화가 화면상 미세한 명암차로만
 보여서 정책이 학습하기 어려워짐).
 
@@ -36,7 +36,7 @@ def open_wrist_camera(index, width=320, height=240):
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     # CAP_PROP_BRIGHTNESS 기본값이 드라이버/전원 이벤트에 따라 0(최저)으로 잡힐 때가 있어서
-    # 매번 명시적으로 재설정한다 (103_data_collect_using_teleop_depth_top.py와 동일한 값).
+    # 매번 명시적으로 재설정한다 (data_collect_using_teleop_depth_top.py와 동일한 값).
     cap.set(cv2.CAP_PROP_BRIGHTNESS, 125)
     return cap
 

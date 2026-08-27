@@ -7,7 +7,7 @@
   - 탑뷰가 일반 웹캠(cv2.VideoCapture) 대신 Orbbec Astra S RGB+Depth
     (orbbec_color_camera.ThreadedOrbbecRGBDCamera)로 바뀌었고, 카메라 관측이
     "top"/"wrist" 2개에서 "top"/"top_depth"/"wrist" 3개로 늘었다.
-  - 깊이 정규화 범위(DEPTH_MIN_MM/DEPTH_MAX_MM)는 103_data_collect_using_teleop_depth_top.py로
+  - 깊이 정규화 범위(DEPTH_MIN_MM/DEPTH_MAX_MM)는 data_collect_using_teleop_depth_top.py로
     학습 데이터를 모을 때 쓴 값(350~800mm)과 반드시 동일해야 한다. 다르면 모델이 학습 때
     본 적 없는 깊이 이미지 분포를 보게 돼 예측이 어긋난다.
   - 모델 로딩/select_action()/temporal ensembling/모터 제어 로직은 107.py와 동일.
@@ -42,7 +42,7 @@ TASK_TEXT = "pick up the red box and drop it in the black bin"  # 데이터 수�
 # checkpoints/last는 가장 최근 저장분을 가리키는 심볼릭 링크.
 CHECKPOINT_DIR = "./lerobot_official_act_depth_top_zoom/checkpoints/last/pretrained_model"
 
-# 103_data_collect_using_teleop_depth_top.py 의 DEPTH_MIN_MM/DEPTH_MAX_MM과 반드시 일치시킬 것.
+# data_collect_using_teleop_depth_top.py 의 DEPTH_MIN_MM/DEPTH_MAX_MM과 반드시 일치시킬 것.
 DEPTH_MIN_MM = 350
 DEPTH_MAX_MM = 800
 
@@ -54,11 +54,11 @@ TARGET_HSV_RANGES = DEFAULT_HSV_RANGES
 # (FOLLOWER_GRIPPER_TORQUE_SIGNATURE)에서 걸러진다.
 FOLLOWER_PORT = "/dev/ttyACM0"
 
-# 팔로워 그리퍼의 torque_limit=500 (103_data_collect_using_teleop_depth_top.py에서 설정해둔 값).
+# 팔로워 그리퍼의 torque_limit=500 (data_collect_using_teleop_depth_top.py에서 설정해둔 값).
 # 리더는 전 관절 1000이라 이 값으로 포트가 실제 팔로워인지 구분할 수 있다.
 FOLLOWER_GRIPPER_TORQUE_SIGNATURE = 500
 
-# 팔로워 관절별 torque_limit. 103_data_collect_using_teleop_depth_top.py와 동일한 값을 써서,
+# 팔로워 관절별 torque_limit. data_collect_using_teleop_depth_top.py와 동일한 값을 써서,
 # 재캘리브레이션 시 wrist_flex/gripper의 낮은 토크 설정(그리퍼가 상자를 으스러뜨리지 않도록)이
 # 지워지지 않게 한다.
 FOLLOWER_TORQUE_LIMITS = {
@@ -70,7 +70,7 @@ FOLLOWER_TORQUE_LIMITS = {
     "gripper": 500,
 }
 
-# wrist_roll(5번 관절) 홈 포즈. 103_data_collect_using_teleop_depth_top.py와 동일한 값.
+# wrist_roll(5번 관절) 홈 포즈. data_collect_using_teleop_depth_top.py와 동일한 값.
 # 학습 데이터가 항상 이 각도에서 시작했으므로, 추론도 같은 초기 자세에서 시작해야
 # 모델이 본 적 있는 상태 분포에 가깝다.
 HOME_WRIST_ROLL_POS = 2025
@@ -113,7 +113,7 @@ class ThreadedCamera:
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
         # CAP_PROP_BRIGHTNESS 기본값이 드라이버/전원 이벤트에 따라 0(최저)으로 잡힐 때가
         # 있어서 매번 명시적으로 재설정한다. 학습 데이터 수집 때와 밝기를 맞춰야 함
-        # (103_data_collect_using_teleop_depth_top.py와 동일한 값).
+        # (data_collect_using_teleop_depth_top.py와 동일한 값).
         self.cap.set(cv2.CAP_PROP_BRIGHTNESS, 125)
         self._opened_event.set()
 
